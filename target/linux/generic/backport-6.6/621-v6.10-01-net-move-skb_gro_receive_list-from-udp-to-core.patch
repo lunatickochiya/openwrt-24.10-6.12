@@ -29,7 +29,7 @@ Signed-off-by: Paolo Abeni <pabeni@redhat.com>
  static inline void gro_normal_list(struct napi_struct *napi)
 --- a/net/core/gro.c
 +++ b/net/core/gro.c
-@@ -225,6 +225,33 @@ done:
+@@ -225,6 +225,34 @@ done:
  	return 0;
  }
  
