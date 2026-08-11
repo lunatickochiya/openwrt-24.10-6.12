@@ -13,9 +13,9 @@ Reviewed-by: Willem de Bruijn <willemb@google.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 ---
  include/net/gro.h      |  1 +
- net/core/gro.c         | 28 ++++++++++++++++++++++++++++
- net/ipv4/udp_offload.c | 28 ----------------------------
- 3 files changed, 29 insertions(+), 28 deletions(-)
+ net/core/gro.c         | 29 +++++++++++++++++++++++++++++
+ net/ipv4/udp_offload.c | 29 -----------------------------
+ 3 files changed, 30 insertions(+), 29 deletions(-)
 
 --- a/include/net/gro.h
 +++ b/include/net/gro.h
@@ -29,7 +29,7 @@ Signed-off-by: Paolo Abeni <pabeni@redhat.com>
  static inline void gro_normal_list(struct napi_struct *napi)
 --- a/net/core/gro.c
 +++ b/net/core/gro.c
-@@ -225,6 +225,34 @@ done:
+@@ -225,6 +225,35 @@ done:
  	return 0;
  }
  
@@ -54,6 +54,7 @@ Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 +	skb->sk = NULL;
 +	p->truesize += skb->truesize;
 +	p->len += skb->len;
++
 +	skb_shinfo(p)->flags |= skb_shinfo(skb)->flags & SKBFL_SHARED_FRAG;
 +
 +	NAPI_GRO_CB(skb)->same_flow = 1;
@@ -66,7 +67,7 @@ Signed-off-by: Paolo Abeni <pabeni@redhat.com>
  {
 --- a/net/ipv4/udp_offload.c
 +++ b/net/ipv4/udp_offload.c
-@@ -542,34 +542,6 @@ out:
+@@ -542,35 +542,6 @@ out:
  	return segs;
  }
  
@@ -91,6 +92,7 @@ Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 -	skb->sk = NULL;
 -	p->truesize += skb->truesize;
 -	p->len += skb->len;
+-
 -	skb_shinfo(p)->flags |= skb_shinfo(skb)->flags & SKBFL_SHARED_FRAG;
 -
 -	NAPI_GRO_CB(skb)->same_flow = 1;
